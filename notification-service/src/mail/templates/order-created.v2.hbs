@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Order Created</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f4f6f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #111827;
+    }
+
+    .email-wrapper {
+      width: 100%;
+      padding: 32px 0;
+    }
+
+    .card {
+      max-width: 640px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 24px 32px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .content {
+      padding: 32px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      margin-bottom: 16px;
+    }
+
+    .meta {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .section-title {
+      margin-top: 32px;
+      margin-bottom: 12px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th {
+      text-align: left;
+      color: #6b7280;
+      font-weight: 500;
+      padding: 10px 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    td {
+      padding: 12px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .amount {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .total-row td {
+      font-weight: 600;
+      border-top: 2px solid #e5e7eb;
+      padding-top: 16px;
+    }
+
+    .payment-box {
+      margin-top: 32px;
+      background: #f9fafb;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+    }
+
+    .footer {
+      padding: 20px 32px;
+      background: #f9fafb;
+      font-size: 12px;
+      color: #6b7280;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="email-wrapper">
+    <div class="card">
+
+      <!-- HEADER -->
+      <div class="header">
+        <h1>Order Confirmation</h1>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="content">
+        <div class="status-badge">ORDER CREATED</div>
+
+        <p>
+          Hello <strong>{{customerId}}</strong>,
+        </p>
+
+        <p>
+          Thank you for your order. We’ve successfully created your order and it’s now being processed.
+        </p>
+
+        <div class="meta">
+          <strong>Order Number:</strong> {{orderNumber}} <br />
+          <strong>External Reference:</strong> {{externalOrderNumber}} <br />
+          <strong>Currency:</strong> {{currency}}
+        </div>
+
+        <!-- ITEMS -->
+        <div class="section-title">Order Summary</div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th class="amount">Unit Price</th>
+              <th class="amount">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+            <tr>
+              <td>{{productId}}</td>
+              <td>{{quantity}}</td>
+              <td class="amount">{{formatAmount unitPrice}}</td>
+              <td class="amount">{{formatAmount (multiply quantity unitPrice)}}</td>
+            </tr>
+            {{/each}}
+
+            <tr class="total-row">
+              <td colspan="3">Total</td>
+              <td class="amount">{{formatAmount totalAmount}} {{currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- PAYMENT -->
+        <div class="payment-box">
+          <strong>Payment Reference</strong><br />
+          Please use <strong>{{orderNumber}}</strong> when making payment.
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div class="footer">
+        © {{year}} Your Company. This is an automated message — no reply required.
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

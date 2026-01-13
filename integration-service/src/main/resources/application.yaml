@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: integration-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  activemq:
+    broker-url: ${ACTIVEMQ_BROKER_URL:}
+    user: ${ACTIVEMQ_USERNAME:}
+    password: ${ACTIVEMQ_PASSWORD:}
+  artemis:
+    mode: native
+    broker-url: ${ACTIVEMQ_BROKER_URL:}
+    user: ${ACTIVEMQ_USERNAME:}
+    password: ${ACTIVEMQ_PASSWORD:}
+    host: ${ACTIVEMQ_HOST:}
+    port: ${ACTIVEMQ_PORT:}
+  kafka:
+    bootstrap-servers: kafka:9092
+    consumer:
+      group-id: integration-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    brokers: kafka:9092
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+camel:
+  component:
+    mail:
+      starttls-enabled: true
+    servlet.mapping.context-path: /camel/*
+    platform-http.enabled: true
+
+order:
+  email:
+    signals:
+      reference: 40
+      skuQty: 30
+      address: 15
+      payment: 15
+      attachment: 20
+    thresholds:
+      structured: 70
+      semi: 40
+
+smtp:
+  host: ${MAIL_GMAIL_SMTP_HOST}
+  port: ${MAIL_GMAIL_SMTP_PORT}
+  username: ${MAIL_GMAIL_USERNAME}
+  password: ${MAIL_GMAIL_PASSWORD}
+  ssl: true
+
+imap:
+ username: ${MAIL_GMAIL_USERNAME}
+ password: ${MAIL_GMAIL_PASSWORD}
+ host: ${MAIL_GMAIL_IMAP_HOST}
+ port: ${MAIL_GMAIL_IMAP_PORT}
+ folder-name: ${MAIL_GMAIL_IMAP_FOLDER_NAME}

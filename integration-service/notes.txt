@@ -1,0 +1,18 @@
+Order Email Classification Strategy
+
+Signal	Points
+======  ======
+Order reference / PO	+40
+SKU + quantity	+30
+Delivery address	+15
+Payment terms	+15
+Attachment present	+20
+
+
+Thresholds:
+≥ 70 → STRUCTURED
+40 – 69 → SEMI_STRUCTURED
+< 40 → UNSTRUCTURED
+
+
+TODO: store external order reference and used for idempotent notification check

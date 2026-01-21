@@ -79,38 +79,7 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(Order.OrderStatus.CREATED);
         Order saved = orderRepository.save(order);
 
-        // TODO: add eventType, email, phoneNumber
-//        String payload = objectMapper.writeValueAsString(new PayloadDto(
-//                saved.getOrderNumber(),
-//                saved.getCustomerId(),
-//                saved.getTotal(),
-//                saved.getStatus().toString(),
-//                saved.getCurrency(),
-//                "masakachristopher@yahoo.com",
-//                saved.getExternalOrderNumber(),
-//                saved.getItems()
-//        ));
-
-//        OrderCreatedEvent event = OrderCreatedEvent.builder()
-//                .eventId(UUID.randomUUID().toString())
-//                .eventType("order.created")
-//                .eventVersion(1)
-//                .eventTime(Instant.now())
-//                .producer("order-service")
-//                .traceId("TRACE-123456")
-//                .correlationId(order.getOrderNumber())
-//                .data(OrderData.builder().order(order).build())
-//                .build();
-
-//        OutboxEvent evt = OutboxEvent.builder()
-//                .aggregateType(KafkaConstants.DOMAIN)
-//                .aggregateId(String.valueOf(System.currentTimeMillis()))
-//                .eventType(KafkaConstants.ORDER_CREATED_EVENT)
-//                .payload(payload)
-//                .published(false)
-//                .createdAt(LocalDateTime.now())
-//                .build();
-
+        // TODO: add email, phoneNumber
         OrderCreatedEvent orderCreatedEvent = OrderCreatedEvent.builder()
                 .eventId(UUID.randomUUID().toString())
                 .eventType(KafkaConstants.ORDER_CREATED_EVENT)

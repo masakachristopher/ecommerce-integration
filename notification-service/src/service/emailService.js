@@ -13,8 +13,7 @@ export async function sendEmail(event) {
     let email = event.data.order.customerEmail;
     if (!email) {
         logger.warn('Missing customer email', { orderNumber: event.data.order.orderNumber });
-        email = "masakachristopher@yahoo.com";
-        // return;
+        email = process.env.RECIPIENT_MAIL;
     }
 
     let subject = "";

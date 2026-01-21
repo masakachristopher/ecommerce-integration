@@ -2,8 +2,8 @@ package com.apache.camel.ecommerce_integration.route;
 
 import com.apache.camel.ecommerce_integration.dto.OrderDto;
 import com.apache.camel.ecommerce_integration.model.IntegrationAudit;
+import com.apache.camel.ecommerce_integration.processor.CsvToOrderPayloadProcessor;
 import com.apache.camel.ecommerce_integration.processor.OrderAuditProcessor;
-import com.apache.camel.ecommerce_integration.processor.OrderEnrichProcessor;
 import com.apache.camel.ecommerce_integration.processor.OrderValidatorProcessor;
 import lombok.RequiredArgsConstructor;
 import org.apache.camel.builder.RouteBuilder;
@@ -14,9 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderFileRoute extends RouteBuilder {
 
-    private final OrderValidatorProcessor validator;
-    private final OrderEnrichProcessor enricher;
-    private final OrderAuditProcessor auditor;
+    private final CsvToOrderPayloadProcessor csvProcessor;
 
     @Override
     public void configure() throws Exception {
@@ -31,10 +29,9 @@ public class OrderFileRoute extends RouteBuilder {
                     exchange.setProperty("source", IntegrationAudit.OrderSource.FILE);
                 })
                 .unmarshal(csvFormat)
+                .process(csvProcessor)
                 .split(body())
-                .process(validator)
-                .process(enricher)
-                .process(auditor)
+                .convertBodyTo(String.class)
                 .to("direct:sendCommands");
     }
 }
